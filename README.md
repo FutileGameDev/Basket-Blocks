@@ -1,2 +1,2 @@
 # Basket-Blocks
- A simple block game showcasing data persistance
+ A simple game showcasing data persistance between scenes and sessions.
