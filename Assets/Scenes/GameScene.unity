@@ -473,7 +473,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277537cf45329f14cba816f166203a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Countdown: 0
+  sounds:
+  - {fileID: 8300000, guid: e527b3ac6fef1f844811111ae3bcf725, type: 3}
+  - {fileID: 8300000, guid: f82539086d2ac004d9fae0196875d193, type: 3}
+  - {fileID: 8300000, guid: 056e5bc24d0c86743841c31ab7d8273c, type: 3}
+  - {fileID: 8300000, guid: 8406251f0b36f4048a0b0bfd92f4b2bf, type: 3}
+  - {fileID: 8300000, guid: c0e4607cf0fcea044b0db562f4c7fdfe, type: 3}
+  - {fileID: 8300000, guid: 7aa974b74c7189f428446d330c0ece3a, type: 3}
+  - {fileID: 8300000, guid: bbcd8b333e2dc6143a105872353bb1fe, type: 3}
+  - {fileID: 8300000, guid: 70d29931cd766de4f8e9b999775e80d2, type: 3}
+  - {fileID: 8300000, guid: c020d37b826a9c640998087dda2c7563, type: 3}
+  - {fileID: 8300000, guid: 4e671f56777036b4eb9ea3242a4256e8, type: 3}
+  - {fileID: 8300000, guid: 21b707698aa9c6548bbf6be136269cf6, type: 3}
+  - {fileID: 8300000, guid: 75b23ea642fe10344a9fb92929da014a, type: 3}
+  - {fileID: 8300000, guid: 0adb532e4318c4944afd8a343d86ab98, type: 3}
+  - {fileID: 8300000, guid: 1fdfcabfccc5d924e9df83d8d6606eb9, type: 3}
+  - {fileID: 8300000, guid: 3d4acbf78bb3bec4db7ed13c49ccd4ee, type: 3}
+  collectEffects:
+  - Pop
+  - Hug
+  - Banana
+  - Suit
+  - Pen
+  - Ears
+  - Wool
+  - Iceman
 --- !u!1 &350528053
 GameObject:
   m_ObjectHideFlags: 0

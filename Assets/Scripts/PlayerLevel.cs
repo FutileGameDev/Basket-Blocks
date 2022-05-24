@@ -9,6 +9,7 @@ public class PlayerLevel : MonoBehaviour
     public TextMeshProUGUI playerLevelTMP;
     public TextMeshProUGUI scoreCountTMP;
     public static int currentExp;
+    public static int lifetimeExp;
     public static int expNeeded;
     public static int playerLevel = 0;
     private float t = 0f;
@@ -17,6 +18,7 @@ public class PlayerLevel : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        PlayerPrefs.DeleteAll();
     }
     void Start()
     {
@@ -60,9 +62,10 @@ public class PlayerLevel : MonoBehaviour
     public void IncrementScore()
     {
         currentExp += playerLevel;
-        scoreCountTMP.text = currentExp + "";
+        lifetimeExp += playerLevel;
+        scoreCountTMP.text = lifetimeExp + "";
         PlayerPrefs.SetInt("currentExp", currentExp);
-        expNeeded = (playerLevel * 10);
+        PlayerPrefs.SetInt("lifetimeExp", lifetimeExp);
         PlayerPrefs.SetInt("expNeeded", expNeeded);
         PlayerPrefs.SetInt("playerLevel", playerLevel);
         if(expNeeded < currentExp)
@@ -77,7 +80,7 @@ public class PlayerLevel : MonoBehaviour
         t = 0f;
         ChangeBackground.instance.ChangeBackgroundColor();
         currentExp = 0;
-        expNeeded = (playerLevel * 10 * Mathf.FloorToInt(Mathf.Log(Mathf.Pow(Mathf.Epsilon, playerLevel))));
+        SetExpNeeded();
         experienceMeter.maxValue = expNeeded;
         experienceMeter.value = currentExp;
         playerLevelTMP.text = playerLevel + "";
@@ -85,6 +88,11 @@ public class PlayerLevel : MonoBehaviour
         PlayerPrefs.SetInt("currentExp", currentExp);
         PlayerPrefs.SetInt("expNeeded", expNeeded);
         yield return null;
+    }
+    void SetExpNeeded()
+    {
+        expNeeded = (playerLevel * 100 * Mathf.FloorToInt(Mathf.Log(Mathf.Pow(Mathf.Epsilon, playerLevel))));
+        Debug.Log("expNeeded = " + expNeeded);
     }
     
 }
