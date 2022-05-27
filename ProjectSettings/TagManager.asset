@@ -13,6 +13,7 @@ TagManager:
   - Rabbit
   - Sheep
   - Coin
+  - Basket
   layers:
   - Default
   - TransparentFX

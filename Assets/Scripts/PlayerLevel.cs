@@ -13,6 +13,7 @@ public class PlayerLevel : MonoBehaviour
     public static int expNeeded;
     public static int playerLevel = 0;
     private float t = 0f;
+    private const float e = 2.71828f;
     private bool firstStart;
     public static PlayerLevel instance;
     private void Awake()
@@ -91,7 +92,7 @@ public class PlayerLevel : MonoBehaviour
     }
     void SetExpNeeded()
     {
-        expNeeded = (playerLevel * 100 * Mathf.FloorToInt(Mathf.Log(Mathf.Pow(Mathf.Epsilon, playerLevel))));
+        expNeeded = (playerLevel * 10 * Mathf.FloorToInt(Mathf.Log(Mathf.Pow(e, playerLevel))));
         Debug.Log("expNeeded = " + expNeeded);
     }
     

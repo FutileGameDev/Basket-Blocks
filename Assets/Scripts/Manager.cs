@@ -35,20 +35,26 @@ public class Manager : MonoBehaviour
         }
         if (countdown2 <= 0)
         {
-            int choose = Random.Range(0, toys.Length);
-            Spawn(toys[choose]);
+            Spawn("Basket");
             countdown2 = 1.6f;
         }
-        if (countdown1 <= 0)
+        if (countdown3 <= 0)
         {
-            Spawn("Basket");
-            countdown1 = 2.5f;
+            int choose = Random.Range(0, toys.Length);
+            Spawn(toys[choose]);
+            countdown3 = 2.5f;
         }
     }
     public void SpawnAt(string item, Vector3 pos)
     {
-        GameObject newCoin = (GameObject)objectPooler.SpawnFromPool(item, pos, Quaternion.identity);
-        newCoin.transform.parent = transform;
+        GameObject obj = (GameObject)objectPooler.SpawnFromPool(item, pos, Quaternion.identity);
+        obj.transform.parent = transform;
+        StartCoroutine(Deactivate(obj));
+    }
+    private IEnumerator Deactivate(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.5f);
+        obj.SetActive(false);
     }
     public void Spawn(string item)
     {
@@ -59,10 +65,10 @@ public class Manager : MonoBehaviour
         newCoin.GetComponent<Rigidbody>().velocity = Vector3.zero;
         newCoin.transform.parent = transform;
     }
-    public void SoundAndEffect(int num)
+    public void SoundAndEffect(int num1, Vector3 pos, int num2 = 0)
     {
-        AudioSource.PlayClipAtPoint(sounds[num], transform.position);
-        SpawnAt(collectEffects[num], transform.position); 
+        AudioSource.PlayClipAtPoint(sounds[num1 + num2], transform.position);
+        SpawnAt(collectEffects[num1], pos); 
     }
     public void Sound(int num)
     {

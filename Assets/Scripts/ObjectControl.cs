@@ -16,28 +16,28 @@ public class ObjectControl : MonoBehaviour
             switch (gameObject.tag)
             {
                 case "Coin":
-                    Manager.instance.SoundAndEffect(0);
+                    Manager.instance.SoundAndEffect(0, collision.transform.position);
                     break;
                 case "Bear":
-                    Manager.instance.SoundAndEffect(1);
+                    Manager.instance.SoundAndEffect(1, collision.transform.position);
                     break;
                 case "Monkey":
-                    Manager.instance.SoundAndEffect(2);
+                    Manager.instance.SoundAndEffect(2, collision.transform.position);
                     break;
                 case "Penguin":
-                    Manager.instance.SoundAndEffect(3);
+                    Manager.instance.SoundAndEffect(3, collision.transform.position);
                     break;
                 case "Pig":
-                    Manager.instance.SoundAndEffect(4);
+                    Manager.instance.SoundAndEffect(4, collision.transform.position);
                     break;
                 case "Rabbit":
-                    Manager.instance.SoundAndEffect(5);
+                    Manager.instance.SoundAndEffect(5, collision.transform.position);
                     break;
                 case "Sheep":
-                    Manager.instance.SoundAndEffect(6);
+                    Manager.instance.SoundAndEffect(6, collision.transform.position);
                     break;
                 case "Basket":
-                    Manager.instance.Sound(Random.Range(7, 10));
+                    Manager.instance.SoundAndEffect(7, collision.transform.position, Random.Range(0, 3));
                     break;
             }    
             PlayerLevel.instance.IncrementScore();
@@ -46,12 +46,9 @@ public class ObjectControl : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Basket"))
-        {
-            Manager.instance.Sound(Random.Range(10, 15));
-        }
+        Manager.instance.Sound(Random.Range(10, 15));
         PlayerLevel.instance.IncrementScore();
-        Invoke("DespawnObject", 0.1f);
+        Invoke("DespawnObject", 1f);
     }
     
     public void OnObjectSpawn()
