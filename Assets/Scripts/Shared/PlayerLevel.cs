@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-
 public class PlayerLevel : MonoBehaviour
 {
+    [MenuItem("PlayerData/DeletePlayerPrefs")]
+    static void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
     public Slider experienceMeter;
     public TextMeshProUGUI playerLevelTMP;
     public TextMeshProUGUI scoreCountTMP;
@@ -19,7 +24,6 @@ public class PlayerLevel : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        PlayerPrefs.DeleteAll();
     }
     void Start()
     {
@@ -42,6 +46,7 @@ public class PlayerLevel : MonoBehaviour
         }
         playerLevelTMP.text = playerLevel + "";
         experienceMeter.maxValue = expNeeded;
+        experienceMeter.value = currentExp;
     }
     void FixedUpdate()
     {
@@ -95,5 +100,6 @@ public class PlayerLevel : MonoBehaviour
         expNeeded = (playerLevel * 10 * Mathf.FloorToInt(Mathf.Log(Mathf.Pow(e, playerLevel))));
         Debug.Log("expNeeded = " + expNeeded);
     }
+    
     
 }
