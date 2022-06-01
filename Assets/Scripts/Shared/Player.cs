@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 //using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class Player : MonoBehaviour
     public static Player playerInstance;
     private float dirX;
     private float moveSpeed = 10f;
-    
     private Camera cam;
     private float screenHalfWidthInWorldSpace;
     public GameObject circle;

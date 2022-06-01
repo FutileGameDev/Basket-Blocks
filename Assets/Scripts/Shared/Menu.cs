@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    public static event System.Action OnGameOver;
+    public GameObject gameOverMenu;
     public static Menu instance;
     private void Awake()
     {
@@ -25,5 +27,12 @@ public class Menu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public void GameOver()
+    {
+        if(OnGameOver != null)
+        {
+            OnGameOver();
+        }
     }
 }

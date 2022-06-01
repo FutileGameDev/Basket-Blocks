@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
-public class UpdateHighScores : MonoBehaviour
+using UnityEngine.SceneManagement;
+public class HighScores : MonoBehaviour, System.IComparable
 {
     public PlayerData[] data;
     private string[] names = new string[6];
@@ -55,5 +56,30 @@ public class UpdateHighScores : MonoBehaviour
     private void RankScores(int i)
     {
         System.Array.Sort(names, scores, i, 3);
+        System.Array.Reverse(names);
+        System.Array.Reverse(scores);
+    }
+    private void CheckHighScore()
+    {
+        switch (SceneManager.GetActiveScene().ToString())
+        {
+            case "Basket":
+            for (int i = 3; i > 0; i--)
+            {
+                CompareTo(scores[i]);
+            }
+                break;
+            case "Blocks":
+            for (int i = 3; i < data.Length; i++)
+            {
+            
+            }
+                break;
+        }
+    }
+
+    public int CompareTo(object obj)
+    {
+        return PlayerLevel.instance.score.CompareTo(obj);
     }
 }

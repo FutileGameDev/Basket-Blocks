@@ -17,6 +17,7 @@ public class PlayerLevel : MonoBehaviour
     public static int lifetimeExp;
     public static int expNeeded;
     public static int playerLevel = 0;
+    public int score;
     private float t = 0f;
     private const float e = 2.71828f;
     private bool firstStart;
@@ -69,7 +70,7 @@ public class PlayerLevel : MonoBehaviour
     {
         currentExp += playerLevel;
         lifetimeExp += playerLevel;
-        scoreCountTMP.text = lifetimeExp + "";
+        scoreCountTMP.text = ++score + "";
         PlayerPrefs.SetInt("currentExp", currentExp);
         PlayerPrefs.SetInt("lifetimeExp", lifetimeExp);
         PlayerPrefs.SetInt("expNeeded", expNeeded);
