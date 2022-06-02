@@ -2,84 +2,85 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-public class HighScores : MonoBehaviour, System.IComparable
+public class HighScores : MonoBehaviour
 {
     public PlayerData[] data;
-    private string[] names = new string[6];
-    private int[] scores = new int[6];
+    private string[] names = new string[8];
+    private int[] scores = new int[8];
     public TextMeshProUGUI[] UGUIs;
+    private int length;
     private void Start()
     {
-        Debug.Log("names length = " + names.Length);
-        Debug.Log("scores length = " + scores.Length);
+        UpdateArrays();
+    }
+    private void UpdateArrays()
+    {
         for (int i = 0; i < data.Length; i++)
         {
             switch(data[i].gameName)
             {
-                case "Basket": //0, 1, 2
-                    AssignArrayElements(i);
+                case "Basket": //0
+                    length = 4;
+                    AssignArrayElements(i); //0, 1, 2, 3
                     break;
-                case "Blocks": //3, 4, 5
-                    AssignArrayElements(i);
+                case "Blocks": //1
+                    length = 8;
+                    AssignArrayElements(i, 4); //4, 5, 6, 7
                     break;
             }
         }
-        
-        StartCoroutine("DelayedStart");
+        StartCoroutine("UpdateUI");
     }
-    private IEnumerator DelayedStart()
+    private IEnumerator UpdateUI()
     {
         yield return new WaitForSeconds(1f);
         RankScores(0);
-        RankScores(3);
+        RankScores(4);
         for (int i = 0; i < data.Length; i++)
         {
             switch(data[i].gameName)
             {
-                case "Basket": //0, 1, 2
-                    UGUIs[i].text = names[i];
-                    UGUIs[i + 3].text = scores[i] + "";
+                case "Basket": //0
+                    for (int j = 0; j < 3; j++)
+                    {
+                        UGUIs[j].text = names[j]; //0, 1, 2 //0, 1, 2
+                        UGUIs[j + 3].text = scores[j] + ""; //3, 4, 5 //0, 1, 2
+                    }
                     break;
-                case "Blocks": //3, 4, 5
-                    UGUIs[i + 3].text = names[i];
-                    UGUIs[i + 6].text = scores[i] + "";
+                case "Blocks": //1
+                    for (int j = 6; j < 9; j++)
+                    {
+                        UGUIs[j].text = names[j - 2]; //6, 7, 8 //4, 5, 6
+                        UGUIs[j + 3].text = scores[j - 2] + ""; //9, 10, 11 //4, 5, 6
+                    }
                     break;
             }
         }
-        
     }
-    private void AssignArrayElements(int i)
+    private void AssignArrayElements(int i, int k = 0)
     {
-        names[i] = data[i].playerName;
-        scores[i] = data[i].highScore;
+        for (int j = length - 4; j < length; j++)
+        {
+            names[j] = data[i].playerName[j - k];
+            scores[j] = data[i].highScore[j - k];
+        }
     }
-    private void RankScores(int i)
+    private void RankScores(int start)
     {
-        System.Array.Sort(names, scores, i, 3);
-        System.Array.Reverse(names);
-        System.Array.Reverse(scores);
+        System.Array.Sort(scores, names, start, 4);
+        System.Array.Reverse(names, start, 4);
+        System.Array.Reverse(scores, start, 4);
     }
     private void CheckHighScore()
     {
-        switch (SceneManager.GetActiveScene().ToString())
+        switch (SceneManager.GetActiveScene().name)
         {
             case "Basket":
-            for (int i = 3; i > 0; i--)
-            {
-                CompareTo(scores[i]);
-            }
+                data[0].highScore[3] = PlayerLevel.instance.score;
                 break;
             case "Blocks":
-            for (int i = 3; i < data.Length; i++)
-            {
-            
-            }
+                data[1].highScore[3] = PlayerLevel.instance.score;
                 break;
         }
-    }
-
-    public int CompareTo(object obj)
-    {
-        return PlayerLevel.instance.score.CompareTo(obj);
     }
 }

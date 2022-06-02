@@ -3,8 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    public static event System.Action OnGameOver;
-    public GameObject gameOverMenu;
+    public static event System.Action<string> OnGameOver;
     public static Menu instance;
     private void Awake()
     {
@@ -32,7 +31,7 @@ public class Menu : MonoBehaviour
     {
         if(OnGameOver != null)
         {
-            OnGameOver();
+            OnGameOver(SceneManager.GetActiveScene().name);
         }
     }
 }

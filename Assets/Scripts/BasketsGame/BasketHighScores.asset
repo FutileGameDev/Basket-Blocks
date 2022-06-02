@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c7b8c39d8ebe684bb649164ada6e254, type: 3}
-  m_Name: Player2Blocks
+  m_Name: BasketHighScores
   m_EditorClassIdentifier: 
-  gameName: Blocks
-  playerName: P2
-  highScore: 12
+  gameName: Basket
+  playerName:
+  - Basket1
+  - Basket2
+  - Basket3
+  - Basket4
+  highScore: 02000000040000000600000008000000

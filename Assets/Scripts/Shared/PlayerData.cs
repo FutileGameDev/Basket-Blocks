@@ -3,6 +3,6 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public string gameName;
-    public string playerName;
-    public int highScore;
+    public string[] playerName = new string[4];
+    public int[] highScore = new int[4];
 }

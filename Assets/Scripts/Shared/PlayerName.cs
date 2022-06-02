@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+
 using System.Text.RegularExpressions;
 using TMPro;
 
@@ -9,18 +10,50 @@ public class PlayerName : MonoBehaviour
     public GameObject inputMenu;
     public GameObject pauseButton;
     private string playerInput;
+    private string game;
     private int index;
     public PlayerData[] data;
     public TextMeshProUGUI warning;
     public TMP_InputField inputField;
     void Start()
     {
-        Time.timeScale = 0f;
-        //Menu.OnGameOver += CheckHighScore();
+        Debug.Log("data[0].highScore.Length " + data[0].highScore.Length);
+        Menu.OnGameOver += GetScene;
     }
     void OnDestroy()
     {
-        //Menu.OnGameOver -= CheckHighScore();
+        Menu.OnGameOver -= GetScene;
+    }
+    private void GetScene(string sceneName)
+    {
+        game = sceneName;
+        index = sceneName == "Baskets" ? 0 : 1;
+        Debug.Log("sceneName = " + sceneName);
+        CompareScore();
+    }
+    private void CompareScore()
+    {
+        switch(index)
+        {
+            case 0:
+                if(PlayerLevel.instance.score > data[0].highScore[2])
+                {
+                    data[0].highScore[3] = PlayerLevel.instance.score;
+                    inputMenu.SetActive(true);
+                }
+                else
+                {
+                    Menu.instance.PlayGame("Menu");
+                }
+                break;
+            case 1:
+                if(PlayerLevel.instance.score > data[1].highScore[2])
+                {
+                    data[1].highScore[3] = PlayerLevel.instance.score;
+                    inputMenu.SetActive(true);
+                }
+                break;
+        }
     }
     
     public void GetInput()
@@ -46,9 +79,8 @@ public class PlayerName : MonoBehaviour
     {
         if(playerInput.Length > 0 && playerInput.Length <= 16 && Regex.IsMatch(playerInput, @"[a-zA-Z]"))
         {
-            data[index].playerName = playerInput;
-            pauseButton.SetActive(true);
-            inputMenu.SetActive(false);
+            data[index].playerName[3] = playerInput;
+            Menu.instance.PlayGame("Menu");
             Time.timeScale = 1f;
         }
         else
