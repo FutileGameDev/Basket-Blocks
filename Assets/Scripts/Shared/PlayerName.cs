@@ -52,6 +52,10 @@ public class PlayerName : MonoBehaviour
                     data[1].highScore[3] = PlayerLevel.instance.score;
                     inputMenu.SetActive(true);
                 }
+                else
+                {
+                    Menu.instance.PlayGame("Menu");
+                }
                 break;
         }
     }

@@ -61,7 +61,6 @@ public class PlayerLevel : MonoBehaviour
             {
                 return;
             }
-            
             t += Time.deltaTime / 4f;
             experienceMeter.value = Mathf.SmoothStep(experienceMeter.value, experienceMeter.maxValue, t);
         }        
@@ -101,6 +100,4 @@ public class PlayerLevel : MonoBehaviour
         expNeeded = (playerLevel * 10 * Mathf.FloorToInt(Mathf.Log(Mathf.Pow(e, playerLevel))));
         Debug.Log("expNeeded = " + expNeeded);
     }
-    
-    
 }

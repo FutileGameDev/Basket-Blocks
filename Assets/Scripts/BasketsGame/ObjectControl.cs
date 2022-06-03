@@ -1,15 +1,15 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObjectControl : MonoBehaviour
 {
-    public float speed = 15f;
-    Vector3 spawnPosition;
+    [SerializeField]
+    private float speed = 15f;
     private float Rotation = 90f;
     private float bottomBound = -10;
     private float backZ = -0.05f;
     private float frontZ = 0.05f;
-    
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Base"))
         {
@@ -44,14 +44,14 @@ public class ObjectControl : MonoBehaviour
             Invoke("DespawnObject", 0.1f);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         Manager.instance.Sound(Random.Range(10, 15));
         PlayerLevel.instance.IncrementScore();
         Invoke("DespawnObject", 1f);
     }
     
-    public void OnObjectSpawn()
+    protected virtual void OnObjectSpawn()
     {        
         transform.rotation = Quaternion.AngleAxis(Rotation = Random.Range(0, 360), Vector3.forward);
     }
@@ -59,18 +59,23 @@ public class ObjectControl : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    private void Update()
+    protected virtual void Update()
     {
+        Debug.Log("ObjectControl Update called");
         transform.Rotate(0, Rotation * Time.deltaTime, 0);
-        if(transform.position.y < bottomBound)
-        {
-            CancelInvoke("DespawnObject");
-            gameObject.SetActive(false);
-        }
+        OutOfBounds();
         if(transform.position.z < backZ || transform.position.z > frontZ)
         {
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, 0f), step);
+        }
+    }
+    protected virtual void OutOfBounds()
+    {
+        if(transform.position.y < bottomBound)
+        {
+            CancelInvoke("DespawnObject");
+            gameObject.SetActive(false);
         }
     }
 }

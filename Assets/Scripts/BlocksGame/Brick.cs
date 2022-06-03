@@ -1,43 +1,58 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class Brick : MonoBehaviour
+public class Brick : ObjectControl
 {
-    public UnityEvent<int> onDestroyed;
-    
-    public int PointValue;
-
-    void Start()
+    protected override void Update()
     {
-        var renderer = GetComponentInChildren<Renderer>();
-
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        switch (PointValue)
-        {
-            case 1 :
-                block.SetColor("_BaseColor", Color.green);
-                break;
-            case 2:
-                block.SetColor("_BaseColor", Color.yellow);
-                break;
-            case 5:
-                block.SetColor("_BaseColor", Color.blue);
-                break;
-            default:
-                block.SetColor("_BaseColor", Color.red);
-                break;
-        }
-        renderer.SetPropertyBlock(block);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        onDestroyed.Invoke(PointValue);
         
-        //slight delay to be sure the ball have time to bounce
-        Destroy(gameObject, 0.2f);
+    }
+    protected override void OnObjectSpawn()
+    {
+        
+    }
+    protected override void OutOfBounds()
+    {
+        
+    }
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Base"))
+        {
+            switch (gameObject.tag)
+            {
+                case "Coin":
+                    SubManager.sub.Sound(0);
+                    break;
+                case "Bear":
+                    SubManager.sub.Sound(1);
+                    break;
+                case "Monkey":
+                    SubManager.sub.Sound(2);
+                    break;
+                case "Penguin":
+                    SubManager.sub.Sound(3);
+                    break;
+                case "Pig":
+                    SubManager.sub.Sound(4);
+                    break;
+                case "Rabbit":
+                    SubManager.sub.Sound(5);
+                    break;
+                case "Sheep":
+                    SubManager.sub.Sound(6);
+                    break;
+                case "Basket":
+                    SubManager.sub.Sound(7);
+                    break;
+            }    
+            PlayerLevel.instance.IncrementScore();
+            SubManager.sub.UpdateTotal();
+            Invoke("DespawnObject", 0.1f);
+        }
+    }
+    protected override void OnTriggerEnter(Collider other)
+    {
+
     }
 }
