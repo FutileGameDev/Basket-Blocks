@@ -58,8 +58,4 @@ public class Ball : MonoBehaviour
                 break;
         }
     }
-    private void FixedUpdate()
-    {
-        Debug.Log(rb.velocity);
-    }
 }

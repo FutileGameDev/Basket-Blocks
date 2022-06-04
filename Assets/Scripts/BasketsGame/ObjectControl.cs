@@ -61,7 +61,6 @@ public class ObjectControl : MonoBehaviour
     }
     protected virtual void Update()
     {
-        Debug.Log("ObjectControl Update called");
         transform.Rotate(0, Rotation * Time.deltaTime, 0);
         OutOfBounds();
         if(transform.position.z < backZ || transform.position.z > frontZ)

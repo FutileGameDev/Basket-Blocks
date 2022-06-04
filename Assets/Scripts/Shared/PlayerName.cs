@@ -17,7 +17,6 @@ public class PlayerName : MonoBehaviour
     public TMP_InputField inputField;
     void Start()
     {
-        Debug.Log("data[0].highScore.Length " + data[0].highScore.Length);
         Menu.OnGameOver += GetScene;
     }
     void OnDestroy()
@@ -28,7 +27,6 @@ public class PlayerName : MonoBehaviour
     {
         game = sceneName;
         index = sceneName == "Baskets" ? 0 : 1;
-        Debug.Log("sceneName = " + sceneName);
         CompareScore();
     }
     private void CompareScore()
@@ -38,7 +36,6 @@ public class PlayerName : MonoBehaviour
             case 0:
                 if(PlayerLevel.instance.score > data[0].highScore[2])
                 {
-                    data[0].highScore[3] = PlayerLevel.instance.score;
                     inputMenu.SetActive(true);
                 }
                 else
@@ -49,7 +46,6 @@ public class PlayerName : MonoBehaviour
             case 1:
                 if(PlayerLevel.instance.score > data[1].highScore[2])
                 {
-                    data[1].highScore[3] = PlayerLevel.instance.score;
                     inputMenu.SetActive(true);
                 }
                 else
@@ -84,6 +80,7 @@ public class PlayerName : MonoBehaviour
         if(playerInput.Length > 0 && playerInput.Length <= 16 && Regex.IsMatch(playerInput, @"[a-zA-Z]"))
         {
             data[index].playerName[3] = playerInput;
+            data[index].highScore[3] = PlayerLevel.instance.score;
             Menu.instance.PlayGame("Menu");
             Time.timeScale = 1f;
         }
